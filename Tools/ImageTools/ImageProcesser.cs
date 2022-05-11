@@ -24,8 +24,7 @@ namespace MazeAbstraction.Tools.ImageTools
                 }
                 binaryImage.Add(aux);
             }
-
-            return null;
+            return binaryImage;
         }
     }
 }
