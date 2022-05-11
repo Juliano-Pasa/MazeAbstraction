@@ -13,17 +13,17 @@ namespace MazeAbstraction.Source
             Node n4 = new Node(4);
             Node n5 = new Node(5);
 
-            graph.addNode(n1);
-            graph.addNode(n2);
-            graph.addNode(n3);
-            graph.addNode(n4);
-            graph.addNode(n5);
+            graph.AddNode(n1);
+            graph.AddNode(n2);
+            graph.AddNode(n3);
+            graph.AddNode(n4);
+            graph.AddNode(n5);
 
-            graph.createLinkBetween(n1, n3);
-            graph.createLinkBetween(n2, n3);
-            graph.createLinkBetween(n2, n4);
-            graph.createLinkBetween(n3, n4);
-            graph.createLinkBetween(n4, n5);
+            graph.CreateLinkBetween(n1, n3);
+            graph.CreateLinkBetween(n2, n3);
+            graph.CreateLinkBetween(n2, n4);
+            graph.CreateLinkBetween(n3, n4);
+            graph.CreateLinkBetween(n4, n5);
 
             if (HasPath(graph, n1.GetId(), n5.GetId())) {
                 Console.WriteLine("tem caminho!");
@@ -31,8 +31,8 @@ namespace MazeAbstraction.Source
         }
 
         public static bool HasPath(Graph graph, int startNodeId, int endNodeId){
-            Node startNode = graph.getNode(startNodeId);
-            Node endNode = graph.getNode(endNodeId);
+            Node startNode = graph.GetNode(startNodeId);
+            Node endNode = graph.GetNode(endNodeId);
 
             List<Node> visited = new List<Node>();
             visited.Add(startNode);
@@ -42,13 +42,14 @@ namespace MazeAbstraction.Source
             while (next != null){
                 Node current = next.Dequeue();
                 List<Link> links = current.GetLinks();
+                visited.Add(current);
 
                 foreach (Link link in links){
-                    if (!visited.Contains(link.getNeighbour())){
-                        if (link.getNeighbour() == endNode){
+                    if (!visited.Contains(link.GetNeighbour())){
+                        if (link.GetNeighbour() == endNode){
                             return true;
                         }
-                        next.Enqueue(link.getNeighbour());
+                        next.Enqueue(link.GetNeighbour());
                     }   
                 }
             }

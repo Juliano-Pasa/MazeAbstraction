@@ -8,7 +8,7 @@ namespace MazeAbstraction.Tools.GraphTools
             this.neighbour = neighbour;
         }
 
-        public Node getNeighbour(){
+        public Node GetNeighbour(){
             return this.neighbour;
         }
     }
