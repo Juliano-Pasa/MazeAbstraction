@@ -15,30 +15,34 @@ namespace MazeAbstraction.Tools.GraphTools
         }
 
         public void removeLinkWith(Node linkNode){
-            links.RemoveAll(v => v.getEndNode().getId() == linkNode.getId());
+            links.RemoveAll(v => v.getNeighbour().GetId() == linkNode.GetId());
         }
 
-        public void removeLinkWith(int nodeId){
-            links.RemoveAll(v => v.getEndNode().getId() == nodeId);
+        public void RemoveLinkWith(int nodeId){
+            links.RemoveAll(v => v.getNeighbour().GetId() == nodeId);
         }
 
-        public bool hasLinkWith(Node linkNode){
-            return links.Find(v => v.getEndNode().getId() == linkNode.getId()) != null;
+        public bool HasLinkWith(Node linkNode){
+            return links.Find(v => v.getNeighbour().GetId() == linkNode.GetId()) != null;
         }
 
-        public bool hasLinkWith(int nodeId){
-            return links.Find(v => v.getEndNode().getId() == nodeId) != null;
+        public bool HasLinkWith(int nodeId){
+            return links.Find(v => v.getNeighbour().GetId() == nodeId) != null;
         }
 
         public Link GetLinkWith(Node linkNode){
-            return links.Find(v => v.getEndNode().getId() == linkNode.getId());
+            return links.Find(v => v.getNeighbour().GetId() == linkNode.GetId());
         }
 
         public Link GetLinkWith(int nodeId){
-            return links.Find(v => v.getEndNode().getId() == nodeId);
+            return links.Find(v => v.getNeighbour().GetId() == nodeId);
         }
 
-        public int getId(){
+        public List<Link> GetLinks(){
+            return this.links;
+        }
+
+        public int GetId(){
             return this.id;
         }
     }

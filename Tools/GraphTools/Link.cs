@@ -2,19 +2,14 @@ namespace MazeAbstraction.Tools.GraphTools
 {
     public class Link
     {
-        private Node startNode, endNode;
+        private Node neighbour;
 
-        public Link(Node startNode, Node endNode){
-            this.startNode = startNode;
-            this.endNode = endNode;
+        public Link(Node neighbour){
+            this.neighbour = neighbour;
         }
 
-        public Node getStartNode(){
-            return this.startNode;
-        }
-
-        public Node getEndNode(){
-            return this.endNode;
+        public Node getNeighbour(){
+            return this.neighbour;
         }
     }
 }
