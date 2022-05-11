@@ -1,7 +1,9 @@
-namespace MazeAbstraction.Tools.Graph
+namespace MazeAbstraction.Tools.GraphTools
 {
-    public class ExtendedNode
+    public class ExtendedNode : Node
     {
-        
+        public ExtendedNode(int id) : base(id) {
+
+        }
     }
 }

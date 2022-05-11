@@ -1,5 +1,3 @@
-using MazeAbstraction.Tools.GraphTools;
-
 namespace MazeAbstraction.Tools.GraphTools
 {
     public class Graph
