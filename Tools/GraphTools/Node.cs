@@ -30,16 +30,16 @@ namespace MazeAbstraction.Tools.GraphTools
             return links.Find(v => v.GetNeighbour().GetId() == nodeId) != null;
         }
 
+        public List<Link> GetLinks(){
+            return this.links;
+        }
+
         public Link GetLinkWith(Node linkNode){
             return GetLinkWith(linkNode.GetId());
         }
 
         public Link GetLinkWith(int nodeId){
             return links.Find(v => v.GetNeighbour().GetId() == nodeId);
-        }
-
-        public List<Link> GetLinks(){
-            return this.links;
         }
 
         public int GetId(){
