@@ -35,8 +35,18 @@ namespace MazeAbstraction.Tools.ImageTools
             Graph graph = new Graph();
             for (int row = 0; row < height; row++){
                 for (int col = 0; col < width; col++){
-                    if (boolMatrix[row][col]){    // Checks for valid maze position                 
-                        if (TotalNeighbours(row, col, boolMatrix) != 2){    // Checks for crossroads
+                    if (!boolMatrix[row][col]){    // Skips if maze position is invalid                 
+                        continue;   
+                    }
+                    int totalNeighbours = TotalNeighbours(row, col, boolMatrix);
+                    if (totalNeighbours != 2){    // Checks for crossroads
+                        Node originalNode = graph.GetNode(Position(row, col, width));
+
+                        if (originalNode == null){
+                            originalNode = new Node(Position(row, col, width));
+                        }
+
+                        if (originalNode != null && totalNeighbours != 1) {
                             
                         }
                     }
@@ -70,6 +80,13 @@ namespace MazeAbstraction.Tools.ImageTools
             return row*width + column;
         }
 
-        
+        private void constroyAllLinks(Node node, int row, int col, List<List<bool>> boolMatrix){
+            
+        }
+
+        private Link constroyUpwardsLink(int row, int col, List<List<bool>> boolMatrix){
+            List<int> intermediatePath = new List<int>();
+            return null;
+        }
     }
 }

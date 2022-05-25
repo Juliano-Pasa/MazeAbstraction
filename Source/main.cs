@@ -19,11 +19,11 @@ namespace MazeAbstraction.Source
             graph.AddNode(n4);
             graph.AddNode(n5);
 
-            graph.CreateLinkBetween(n1, n3, new List<Node>(), 0);
-            graph.CreateLinkBetween(n2, n3, new List<Node>(), 1);
-            graph.CreateLinkBetween(n2, n4, new List<Node>(), 2);
-            graph.CreateLinkBetween(n3, n4, new List<Node>(), 3);
-            graph.CreateLinkBetween(n4, n5, new List<Node>(), 4);
+            graph.CreateLinkBetween(n1, n3, new List<int>(), 0);
+            graph.CreateLinkBetween(n2, n3, new List<int>(), 1);
+            graph.CreateLinkBetween(n2, n4, new List<int>(), 2);
+            graph.CreateLinkBetween(n3, n4, new List<int>(), 3);
+            graph.CreateLinkBetween(n4, n5, new List<int>(), 4);
 
             if (HasPath(graph, n1.GetId(), n5.GetId())) {
                 Console.WriteLine("tem caminho!");

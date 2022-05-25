@@ -36,19 +36,19 @@ namespace MazeAbstraction.Tools.GraphTools
             return graph.Find(value => value.GetId() == nodeId);
         }
 
-        public void CreateLinkBetween(Node startNode, Node endNode, List<Node> intermediateNodes, int linkId){
+        public void CreateLinkBetween(Node startNode, Node endNode, List<int> intermediatePath, int linkId){
             if (!HasNode(startNode) || !HasNode(endNode)) return;
 
-            Link link = new Link(startNode, endNode, intermediateNodes, linkId);
+            Link link = new Link(startNode, endNode, intermediatePath, linkId);
             startNode.AddLink(link);
             endNode.AddLink(link);
         }
 
-        public void CreateLinkBetween(int startNodeId, int endNodeId, List<Node> intermediateNodes, int linkId){
+        public void CreateLinkBetween(int startNodeId, int endNodeId, List<int> intermediatePath, int linkId){
             Node startNode = GetNode(startNodeId);
             Node endNode = GetNode(endNodeId);
 
-            CreateLinkBetween(startNode, endNode, intermediateNodes, linkId);
+            CreateLinkBetween(startNode, endNode, intermediatePath, linkId);
         }
     }
 }
