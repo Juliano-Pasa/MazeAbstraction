@@ -42,6 +42,7 @@ namespace MazeAbstraction.Tools.ImageTools
                     }
                 }
             }
+            return null;
         }
 
         private int TotalNeighbours(int row, int column, List<List<bool>> boolMatrix){

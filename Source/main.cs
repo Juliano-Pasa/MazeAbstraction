@@ -45,11 +45,11 @@ namespace MazeAbstraction.Source
                 visited.Add(current);
 
                 foreach (Link link in links){
-                    if (!visited.Contains(link.GetNeighbour())){
-                        if (link.GetNeighbour() == endNode){
+                    if (!visited.Contains(link.GetNeighbour(current.GetId()))){
+                        if (link.GetNeighbour(current.GetId()) == endNode){
                             return true;
                         }
-                        next.Enqueue(link.GetNeighbour());
+                        next.Enqueue(link.GetNeighbour(current.GetId()));
                     }   
                 }
             }

@@ -19,7 +19,7 @@ namespace MazeAbstraction.Tools.GraphTools
         }
 
         public void RemoveLinkWith(int nodeId){
-            links.RemoveAll(v => v.GetNeighbour().GetId() == nodeId);
+            links.RemoveAll(l => l.GetNeighbour(this.id).GetId() == nodeId);
         }
 
         public bool HasLinkWith(Node linkNode){
@@ -27,7 +27,7 @@ namespace MazeAbstraction.Tools.GraphTools
         }
 
         public bool HasLinkWith(int nodeId){
-            return links.Find(v => v.GetNeighbour().GetId() == nodeId) != null;
+            return links.Find(l => l.GetNeighbour(this.id).GetId() == nodeId) != null;
         }
 
         public List<Link> GetLinks(){
@@ -39,7 +39,7 @@ namespace MazeAbstraction.Tools.GraphTools
         }
 
         public Link GetLinkWith(int nodeId){
-            return links.Find(v => v.GetNeighbour().GetId() == nodeId);
+            return links.Find(l => l.GetNeighbour(this.id).GetId() == nodeId);
         }
 
         public int GetId(){
