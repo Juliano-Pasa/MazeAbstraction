@@ -2,6 +2,13 @@ using MazeAbstraction.Tools.GraphTools;
 
 namespace MazeAbstraction.Tools.ImageTools
 {
+    public enum Moved {
+        //Enums all possible moves going clockwise
+        up,
+        right,
+        down,
+        left
+    }
     public class BinaryImage
     {
         private int width {get;}
@@ -33,6 +40,7 @@ namespace MazeAbstraction.Tools.ImageTools
 
                         if (originalNode == null){
                             originalNode = new Node(Position(row, col, width));
+                            CreateAllLinks(originalNode, row, col, graph);
                         }
 
                         if (originalNode != null && totalNeighbours != 1) {
@@ -42,6 +50,61 @@ namespace MazeAbstraction.Tools.ImageTools
                 }
             }
             return null;
+        }
+
+        private void CreateAllLinks(Node node, int row, int col, Graph graph){
+            if (IsValid(row-1, col)){
+                CreateLink(node, row, col, Moved.up, graph);
+            }
+
+            if (IsValid(row+1, col)){
+                CreateLink(node, row, col, Moved.down, graph);
+            }
+
+            if (IsValid(row, col-1)){
+                CreateLink(node, row, col, Moved.left, graph);
+            }
+
+            if (IsValid(row, col+1)){
+                CreateLink(node, row, col, Moved.right, graph);
+            }
+        }
+
+        private void CreateLink(Node node, int row, int col, Moved moved, Graph graph){
+            List<int> intermediatePath = FindIntermediatePath(row-1, col, moved);
+            Node endingNode = graph.ForceGetNode(intermediatePath.Last());
+            graph.CreateLinkBetween(node, endingNode, intermediatePath, 0);
+        }
+
+        private List<int> FindIntermediatePath(int row, int col, Moved lastMovement){
+            List<int> path = new List<int>();
+            path.Add(Position(row, col, width));
+
+            if (TotalNeighbours(row, col) != 2){    // This will be the last point added do the path
+                return path;
+            }
+
+            if (IsValid(row-1, col) && lastMovement != Moved.down){
+                path.AddRange(FindIntermediatePath(row-1, col, Moved.up));
+                return path;
+            }
+
+            if (IsValid(row+1, col) && lastMovement != Moved.up){
+                path.AddRange(FindIntermediatePath(row+1, col, Moved.down));
+                return path;
+            }
+            
+            if (IsValid(row, col-1) && lastMovement != Moved.right){
+                path.AddRange(FindIntermediatePath(row, col-1, Moved.left));
+                return path;
+            }
+            
+            if (IsValid(row, col+1) && lastMovement != Moved.left){
+                path.AddRange(FindIntermediatePath(row-1, col, Moved.right));
+                return path;
+            }
+
+            return path;
         }
 
         private int TotalNeighbours(int row, int col){
@@ -66,13 +129,7 @@ namespace MazeAbstraction.Tools.ImageTools
             }
 
             return total;
-        }
-
-        private void CreateAllLinks(Node node, int row, int col){
-            if (IsValid(row-1, col)){
-                
-            }
-        }
+        }    
 
         private int Position(int row, int column, int width){
             return row*width + column;
