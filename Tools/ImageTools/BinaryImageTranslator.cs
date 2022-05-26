@@ -16,8 +16,6 @@ namespace MazeAbstraction.Tools.ImageTools
             int height = bimg.height;
             int width = bimg.width;
 
-            Graph graph = new Graph();
-
             for (int row = 0; row < height; row++){
                 for (int col = 0; col < width; col++){
                     if (!bimg.IsValid(row, col)){    // Skips if maze position is invalid                 
@@ -31,7 +29,7 @@ namespace MazeAbstraction.Tools.ImageTools
 
                         if (originalNode == null){
                             originalNode = new Node(bimg.Position(row, col, width));
-                            CreateAllLinks(originalNode, row, col, graph);
+                            CreateAllLinks(originalNode, row, col);
                         }
 
                         if (originalNode != null && totalNeighbours != 1) {
@@ -43,25 +41,25 @@ namespace MazeAbstraction.Tools.ImageTools
             return null;
         }
 
-        private void CreateAllLinks(Node node, int row, int col, Graph graph){
+        private void CreateAllLinks(Node node, int row, int col){
             if (bimg.IsValid(row-1, col)){
-                CreateLink(node, row, col, Moved.up, graph);
+                CreateLink(node, row, col, Moved.up);
             }
 
             if (bimg.IsValid(row+1, col)){
-                CreateLink(node, row, col, Moved.down, graph);
+                CreateLink(node, row, col, Moved.down);
             }
 
             if (bimg.IsValid(row, col-1)){
-                CreateLink(node, row, col, Moved.left, graph);
+                CreateLink(node, row, col, Moved.left);
             }
 
             if (bimg.IsValid(row, col+1)){
-                CreateLink(node, row, col, Moved.right, graph);
+                CreateLink(node, row, col, Moved.right);
             }
         }
 
-        private void CreateLink(Node node, int row, int col, Moved moved, Graph graph){
+        private void CreateLink(Node node, int row, int col, Moved moved){
             List<int> intermediatePath = FindIntermediatePath(row-1, col, moved);
             Node endingNode = graph.ForceGetNode(intermediatePath.Last());
             intermediatePath.RemoveAt(intermediatePath.Count - 1); // Removes last element from the list (extreme node)
