@@ -73,6 +73,8 @@ namespace MazeAbstraction.Tools.ImageTools
         private void CreateLink(Node node, int row, int col, Moved moved, Graph graph){
             List<int> intermediatePath = FindIntermediatePath(row-1, col, moved);
             Node endingNode = graph.ForceGetNode(intermediatePath.Last());
+            intermediatePath.RemoveAt(intermediatePath.Count - 1); // Removes last element from the list (extreme node)
+
             graph.CreateLinkBetween(node, endingNode, intermediatePath, 0);
         }
 
