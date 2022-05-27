@@ -11,25 +11,29 @@ namespace MazeAbstraction.Tools.ImageTools
 
             for (int row = 0; row < height; row++){
                 for (int col = 0; col < width; col++){
+
                     if (!bimg.IsValid(row, col)){    // Skips if maze position is invalid                 
                         continue;   
                     }
 
                     int totalNeighbours = bimg.TotalNeighbours(row, col);
 
-                    if (totalNeighbours != 2){    // Checks for crossroads               
-                        Node originalNode = graph.GetNode(bimg.Position(row, col));
+                    if (totalNeighbours == 2) { // Skips if it's not a crossroad
+                        continue;
+                    }
 
-                        if (originalNode == null){
-                            Console.WriteLine(bimg.Position(row, col));
-                            originalNode = new Node(bimg.Position(row, col));
-                            graph.AddNode(originalNode);
-                            CreateAllLinks(originalNode, row, col, bimg, graph);
-                        }
+                    Node originalNode = graph.GetNode(bimg.Position(row, col));
 
-                        if (originalNode != null && totalNeighbours != 1) {
-                            
-                        }
+                    if (originalNode == null){ // New position that hasnt been reached before
+                        originalNode = new Node(bimg.Position(row, col));
+                        graph.AddNode(originalNode);
+                        CreateAllLinks(originalNode, row, col, bimg, graph);
+                    }
+                    else if (totalNeighbours == 1 && originalNode != null) { // Skips if it's a one-way node that already exists
+                        continue;
+                    }
+                    else { // Existing node that has 3 or 4 neighbours and could have links that were not explored
+                        CreateAllLinks(originalNode, row, col, bimg, graph);
                     }
                 }
             }
