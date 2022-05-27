@@ -37,11 +37,12 @@ namespace MazeAbstraction.Tools.GraphTools
         }
 
         public Node ForceGetNode(int nodeId){
-            if (HasNode(nodeId)){
-                return GetNode(nodeId);
+            Node node = GetNode(nodeId);
+            if (node != null){
+                return node;
             }
 
-            Node node = new Node(nodeId);
+            node = new Node(nodeId);
             AddNode(node);
             return node;
         }
