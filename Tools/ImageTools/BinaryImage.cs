@@ -1,4 +1,4 @@
-using MazeAbstraction.Tools.GraphTools;
+using System.Drawing;
 
 namespace MazeAbstraction.Tools.ImageTools
 {
@@ -19,6 +19,33 @@ namespace MazeAbstraction.Tools.ImageTools
             this.bimg = bimg;
             this.width = width;
             this.height = height;
+        }
+
+        public BinaryImage(Bitmap bmp, int width, int height){
+            this.width = width;
+            this.height = height;
+            this.bimg = ImageToBinaryImage(bmp);
+        }
+
+        public List<List<bool>> ImageToBinaryImage(Bitmap img){
+            List<List<bool>> boolMatrix = new List<List<bool>>();
+            Color white = Color.FromArgb(255, 255, 255, 255);
+
+            for (int i = 0; i < img.Height; i++) {                
+                List<bool> aux = new List<bool>();
+
+                for (int j = 0; j < img.Width; j++) {
+                    if (img.GetPixel(j, i) == white) {
+                        aux.Add(true);
+                    } 
+                    else {
+                        aux.Add(false);
+                    }
+                }
+                boolMatrix.Add(aux);
+            }
+
+            return boolMatrix;
         }
 
         public int TotalNeighbours(int row, int col){
@@ -45,12 +72,12 @@ namespace MazeAbstraction.Tools.ImageTools
             return total;
         }    
 
-        public int Position(int row, int column, int width){
-            return row*width + column;
+        public int Position(int row, int column){
+            return row * this.width + column;
         }
 
         public bool IsValid(int row, int col){
-            if (row > 0 && row < this.height && col > 0 && col < this.width){ // Checks if row and col are inside BinaryImage boundaries
+            if (row >= 0 && row < this.height && col >= 0 && col < this.width){ // Checks if row and col are inside BinaryImage boundaries
                 return bimg[row][col];                
             }
             return false;
