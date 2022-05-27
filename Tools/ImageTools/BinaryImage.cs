@@ -2,13 +2,6 @@ using System.Drawing;
 
 namespace MazeAbstraction.Tools.ImageTools
 {
-    public enum Moved {
-        //Enums all possible moves going clockwise
-        up,
-        right,
-        down,
-        left
-    }
     public class BinaryImage
     {
         public int width {get; private set;}

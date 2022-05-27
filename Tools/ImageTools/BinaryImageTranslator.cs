@@ -2,6 +2,13 @@ using MazeAbstraction.Tools.GraphTools;
 
 namespace MazeAbstraction.Tools.ImageTools
 {
+    public enum Moved {
+        //Enums all possible moves going clockwise
+        up,
+        right,
+        down,
+        left
+    }
     public class BinaryImageTranslator
     {
         public static Graph BinaryImageToAbstractGraph(BinaryImage bimg){
