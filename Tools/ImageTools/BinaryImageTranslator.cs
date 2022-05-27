@@ -2,7 +2,7 @@ using MazeAbstraction.Tools.GraphTools;
 
 namespace MazeAbstraction.Tools.ImageTools
 {
-    public enum Moved {
+    public enum Direction {
         //Enums all possible moves going clockwise
         up,
         right,
@@ -49,24 +49,24 @@ namespace MazeAbstraction.Tools.ImageTools
 
         private static void CreateAllLinks(Node node, int row, int col, BinaryImage bimg, Graph graph){
             if (bimg.IsValid(row-1, col)){
-                CreateLink(node, row-1, col, Moved.up, bimg, graph);
+                CreateLink(node, row-1, col, Direction.up, bimg, graph);
             }
 
             if (bimg.IsValid(row+1, col)){
-                CreateLink(node, row+1, col, Moved.down, bimg, graph);
+                CreateLink(node, row+1, col, Direction.down, bimg, graph);
             }
 
             if (bimg.IsValid(row, col-1)){
-                CreateLink(node, row, col-1, Moved.left, bimg, graph);
+                CreateLink(node, row, col-1, Direction.left, bimg, graph);
             }
 
             if (bimg.IsValid(row, col+1)){
-                CreateLink(node, row, col+1, Moved.right, bimg, graph);
+                CreateLink(node, row, col+1, Direction.right, bimg, graph);
             }
         }
 
-        private static void CreateLink(Node node, int row, int col, Moved moved, BinaryImage bimg, Graph graph){
-            List<int> intermediatePath = FindIntermediatePath(row, col, moved, bimg);
+        private static void CreateLink(Node node, int row, int col, Direction direction, BinaryImage bimg, Graph graph){
+            List<int> intermediatePath = FindIntermediatePath(row, col, direction, bimg);
             
             Node endingNode = graph.ForceGetNode(intermediatePath.Last());
             intermediatePath.RemoveAt(intermediatePath.Count - 1); // Removes last element from the list (extreme node)
@@ -74,7 +74,7 @@ namespace MazeAbstraction.Tools.ImageTools
             graph.CreateLinkBetween(node, endingNode, intermediatePath, 0);
         }
 
-        private static List<int> FindIntermediatePath(int row, int col, Moved lastMovement, BinaryImage bimg){
+        private static List<int> FindIntermediatePath(int row, int col, Direction lastMovement, BinaryImage bimg){
             List<int> path = new List<int>();
             path.Add(bimg.Position(row, col));
 
@@ -82,23 +82,23 @@ namespace MazeAbstraction.Tools.ImageTools
                 return path;
             }
 
-            if (bimg.IsValid(row-1, col) && lastMovement != Moved.down){
-                path.AddRange(FindIntermediatePath(row-1, col, Moved.up, bimg));
+            if (bimg.IsValid(row-1, col) && lastMovement != Direction.down){
+                path.AddRange(FindIntermediatePath(row-1, col, Direction.up, bimg));
                 return path;
             }
 
-            if (bimg.IsValid(row+1, col) && lastMovement != Moved.up){
-                path.AddRange(FindIntermediatePath(row+1, col, Moved.down, bimg));
+            if (bimg.IsValid(row+1, col) && lastMovement != Direction.up){
+                path.AddRange(FindIntermediatePath(row+1, col, Direction.down, bimg));
                 return path;
             }
             
-            if (bimg.IsValid(row, col-1) && lastMovement != Moved.right){
-                path.AddRange(FindIntermediatePath(row, col-1, Moved.left, bimg));
+            if (bimg.IsValid(row, col-1) && lastMovement != Direction.right){
+                path.AddRange(FindIntermediatePath(row, col-1, Direction.left, bimg));
                 return path;
             }
             
-            if (bimg.IsValid(row, col+1) && lastMovement != Moved.left){
-                path.AddRange(FindIntermediatePath(row, col+1, Moved.right, bimg));
+            if (bimg.IsValid(row, col+1) && lastMovement != Direction.left){
+                path.AddRange(FindIntermediatePath(row, col+1, Direction.right, bimg));
                 return path;
             }
 
