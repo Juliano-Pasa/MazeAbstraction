@@ -29,7 +29,7 @@ namespace MazeAbstraction.Tools.ImageTools
                         continue;
                     }
 
-                    Node originalNode = graph.GetNode(bimg.Position(row, col));
+                    INode originalNode = graph.GetNode(bimg.Position(row, col));
 
                     if (originalNode == null){ // New position that hasnt been reached before
                         originalNode = new Node(bimg.Position(row, col));
@@ -47,7 +47,7 @@ namespace MazeAbstraction.Tools.ImageTools
             return graph;
         }
 
-        private static void CreateAllLinks(Node node, int row, int col, BinaryImage bimg, Graph graph){
+        private static void CreateAllLinks(INode node, int row, int col, BinaryImage bimg, Graph graph){
             if (bimg.IsValid(row-1, col)){
                 CreateLink(node, row-1, col, Direction.up, bimg, graph);
             }
@@ -65,13 +65,18 @@ namespace MazeAbstraction.Tools.ImageTools
             }
         }
 
-        private static void CreateLink(Node node, int row, int col, Direction direction, BinaryImage bimg, Graph graph){
+        private static void CreateLink(INode node, int row, int col, Direction direction, BinaryImage bimg, Graph graph){
             List<int> intermediatePath = FindIntermediatePath(row, col, direction, bimg);
             
-            Node endingNode = graph.ForceGetNode(intermediatePath.Last());
+            int endingNodeId = intermediatePath.Last();
+            INode endingNode = graph.GetNode(endingNodeId);
+            if (endingNode == null){
+                endingNode = new Node(intermediatePath.Last());
+            }
             intermediatePath.RemoveAt(intermediatePath.Count - 1); // Removes last element from the list (extreme node)
+            ExtendedLink xlink = new ExtendedLink(node, endingNode, intermediatePath, 0);
 
-            graph.CreateLinkBetween(node, endingNode, intermediatePath, 0);
+            graph.AddLinkBetween(node, endingNode, xlink);
         }
 
         private static List<int> FindIntermediatePath(int row, int col, Direction lastMovement, BinaryImage bimg){
