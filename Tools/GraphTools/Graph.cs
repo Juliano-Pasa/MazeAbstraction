@@ -1,30 +1,30 @@
 namespace MazeAbstraction.Tools.GraphTools
 {
-    public class Graph
+    public class Graph : IGraph
     {
-        private List<Node> graph;
+        private List<INode> graph;
 
         public Graph(){
-            graph = new List<Node>();
+            graph = new List<INode>();
         }
 
-        public void AddNode(Node node){
+        public void AddNode(INode node){
             graph.Add(node);
         }
 
-        public void RemoveNode(Node node){
+        public void RemoveNode(INode node){
             if (node == null) return;
 
-            graph.ForEach(value => value.RemoveLinkWith(node));            
+            graph.ForEach(value => value.RemoveLinkWith(node.GetId()));            
             graph.Remove(node);
         }
 
         public void RemoveNode(int nodeId){
-            Node node = GetNode(nodeId);
+            INode node = GetNode(nodeId);
             RemoveNode(node);
         }
 
-        public bool HasNode(Node node){
+        public bool HasNode(INode node){
             return graph.Contains(node);
         }
 
@@ -32,34 +32,22 @@ namespace MazeAbstraction.Tools.GraphTools
             return graph.Find(value => value.GetId() == nodeId) != null;
         }
 
-        public Node GetNode(int nodeId){
+        public INode GetNode(int nodeId){
             return graph.Find(value => value.GetId() == nodeId);
         }
 
-        public Node ForceGetNode(int nodeId){
-            Node node = GetNode(nodeId);
-            if (node != null){
-                return node;
-            }
-
-            node = new Node(nodeId);
-            AddNode(node);
-            return node;
-        }
-
-        public void CreateLinkBetween(Node startNode, Node endNode, List<int> intermediatePath, int linkId){
+        public void AddLinkBetween(INode startNode, INode endNode, ILink link){
             if (!HasNode(startNode) || !HasNode(endNode)) return;
 
-            Link link = new Link(startNode, endNode, intermediatePath, linkId);
             startNode.AddLink(link);
             endNode.AddLink(link);
         }
 
-        public void CreateLinkBetween(int startNodeId, int endNodeId, List<int> intermediatePath, int linkId){
-            Node startNode = GetNode(startNodeId);
-            Node endNode = GetNode(endNodeId);
+        public void AddLinkBetween(int startNodeId, int endNodeId, ILink link){
+            INode startNode = GetNode(startNodeId);
+            INode endNode = GetNode(endNodeId);
 
-            CreateLinkBetween(startNode, endNode, intermediatePath, linkId);
+            AddLinkBetween(startNode, endNode, link);
         }
     }
 }

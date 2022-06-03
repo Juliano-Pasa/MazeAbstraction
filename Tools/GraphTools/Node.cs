@@ -1,16 +1,16 @@
 namespace MazeAbstraction.Tools.GraphTools
 {
-    public class Node
+    public class Node : INode
     {
-        private List<Link> links;
+        private List<ILink> links;
         private int id;
 
         public Node(int id){
-            links = new List<Link>();
+            links = new List<ILink>();
             this.id = id;
         }
 
-        public void AddLink(Link link){
+        public void AddLink(ILink link){
             links.Add(link);
         }
 
@@ -19,7 +19,7 @@ namespace MazeAbstraction.Tools.GraphTools
         }
 
         public void RemoveLinkWith(int nodeId){
-            links.RemoveAll(l => l.GetNeighbour(this.id).GetId() == nodeId);
+            links.RemoveAll(l => l.GetNeighbourOf(this.id).GetId() == nodeId);
         }
 
         public bool HasLinkWith(Node linkNode){
@@ -27,19 +27,19 @@ namespace MazeAbstraction.Tools.GraphTools
         }
 
         public bool HasLinkWith(int nodeId){
-            return links.Find(l => l.GetNeighbour(this.id).GetId() == nodeId) != null;
+            return links.Find(l => l.GetNeighbourOf(this.id).GetId() == nodeId) != null;
         }
 
-        public List<Link> GetLinks(){
+        public List<ILink> GetLinks(){
             return this.links;
         }
 
-        public Link GetLinkWith(Node linkNode){
+        public ILink GetLinkWith(Node linkNode){
             return GetLinkWith(linkNode.GetId());
         }
 
-        public Link GetLinkWith(int nodeId){
-            return links.Find(l => l.GetNeighbour(this.id).GetId() == nodeId);
+        public ILink GetLinkWith(int nodeId){
+            return links.Find(l => l.GetNeighbourOf(this.id).GetId() == nodeId);
         }
 
         public int GetId(){
