@@ -39,6 +39,8 @@ namespace MazeAbstraction.Tools.GraphTools
         public void AddLinkBetween(INode startNode, INode endNode, ILink link){
             if (!HasNode(startNode) || !HasNode(endNode)) return;
 
+            Console.WriteLine("Oi");
+
             startNode.AddLink(link);
             endNode.AddLink(link);
         }

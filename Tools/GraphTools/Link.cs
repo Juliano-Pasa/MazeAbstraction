@@ -14,5 +14,8 @@ namespace MazeAbstraction.Tools.GraphTools
         public INode GetNeighbourOf(int nodeId){
             return extremesNodes.Find(node => node.GetId() != nodeId);
         }
+        public List<INode> GetExtremesNodes(){
+            return this.extremesNodes;
+        }
     }
 }

@@ -71,9 +71,12 @@ namespace MazeAbstraction.Tools.ImageTools
             Point endingNodePosition = intermediatePath.Last();
             int endingNodeId = bimg.Position(endingNodePosition.row, endingNodePosition.col);
             INode endingNode = graph.GetNode(endingNodeId);
+
             if (endingNode == null){
                 endingNode = new Node(endingNodeId); // Implements Node
+                graph.AddNode(endingNode);
             }
+            
             intermediatePath.RemoveAt(intermediatePath.Count - 1); // Removes last element from the list (extreme node)
             ExtendedLink xlink = new ExtendedLink(node, endingNode, intermediatePath, 0); // Implements ExtendedLink
 

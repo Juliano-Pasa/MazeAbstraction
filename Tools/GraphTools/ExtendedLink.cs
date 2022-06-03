@@ -31,5 +31,9 @@ namespace MazeAbstraction.Tools.GraphTools
         public List<Point> GetintermediatePath(){
             return this.intermediatePath;
         }
+
+        public List<INode> GetExtremesNodes(){
+            return this.extremesNodes;
+        }
     }
 }
