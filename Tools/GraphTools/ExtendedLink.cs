@@ -3,17 +3,17 @@ namespace MazeAbstraction.Tools.GraphTools
     public class ExtendedLink : ILink
     {
         protected List<INode> extremesNodes;
-        private List<int> intermediatePath;
+        private List<Point> intermediatePath;
         private int length;
         private int id;
 
-        public ExtendedLink(List<INode> extremeNodes, List<int> intermediatePath, int id){
+        public ExtendedLink(List<INode> extremeNodes, List<Point> intermediatePath, int id){
             this.intermediatePath = intermediatePath;
             length = intermediatePath.Count();
             this.id = id;
         }
         
-        public ExtendedLink(INode node1, INode node2, List<int> intermediatePath, int id) : this(new List<INode>(){node1, node2}, intermediatePath, id){
+        public ExtendedLink(INode node1, INode node2, List<Point> intermediatePath, int id) : this(new List<INode>(){node1, node2}, intermediatePath, id){
         }
 
         public INode GetNeighbourOf(int nodeId){
@@ -28,7 +28,7 @@ namespace MazeAbstraction.Tools.GraphTools
             return this.id;
         }
 
-        public List<int> GetintermediatePath(){
+        public List<Point> GetintermediatePath(){
             return this.intermediatePath;
         }
     }
