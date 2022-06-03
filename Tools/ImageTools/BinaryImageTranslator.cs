@@ -11,8 +11,8 @@ namespace MazeAbstraction.Tools.ImageTools
     }
     public class BinaryImageTranslator
     {
-        public static Graph BinaryImageToAbstractGraph(BinaryImage bimg){
-            Graph graph = new Graph();
+        public static AbstractGraph BinaryImageToAbstractGraph(BinaryImage bimg, int clusterSize){
+            AbstractGraph graph = new AbstractGraph(clusterSize, bimg.width, bimg.height);
             int height = bimg.height;
             int width = bimg.width;
 
@@ -47,7 +47,7 @@ namespace MazeAbstraction.Tools.ImageTools
             return graph;
         }
 
-        private static void CreateAllLinks(INode node, int row, int col, BinaryImage bimg, Graph graph){
+        private static void CreateAllLinks(INode node, int row, int col, BinaryImage bimg, AbstractGraph graph){
             if (bimg.IsValid(row-1, col)){
                 CreateLink(node, row-1, col, Direction.up, bimg, graph);
             }
@@ -65,23 +65,28 @@ namespace MazeAbstraction.Tools.ImageTools
             }
         }
 
-        private static void CreateLink(INode node, int row, int col, Direction direction, BinaryImage bimg, Graph graph){
-            List<int> intermediatePath = FindIntermediatePath(row, col, direction, bimg);
+        private static void CreateLink(INode node, int row, int col, Direction direction, BinaryImage bimg, AbstractGraph graph){
+            List<Point> intermediatePath = FindIntermediatePath(row, col, direction, bimg);
             
-            int endingNodeId = intermediatePath.Last();
+            Point endingNodePosition = intermediatePath.Last();
+            int endingNodeId = bimg.Position(endingNodePosition.row, endingNodePosition.col);
             INode endingNode = graph.GetNode(endingNodeId);
             if (endingNode == null){
-                endingNode = new Node(intermediatePath.Last());
+                endingNode = new Node(endingNodeId); // Implements Node
             }
             intermediatePath.RemoveAt(intermediatePath.Count - 1); // Removes last element from the list (extreme node)
-            ExtendedLink xlink = new ExtendedLink(node, endingNode, intermediatePath, 0);
+            ExtendedLink xlink = new ExtendedLink(node, endingNode, intermediatePath, 0); // Implements ExtendedLink
+
+            foreach (Point position in intermediatePath){
+                graph.AddToLinkMap(xlink, position);
+            }
 
             graph.AddLinkBetween(node, endingNode, xlink);
         }
 
-        private static List<int> FindIntermediatePath(int row, int col, Direction lastMovement, BinaryImage bimg){
-            List<int> path = new List<int>();
-            path.Add(bimg.Position(row, col));
+        private static List<Point> FindIntermediatePath(int row, int col, Direction lastMovement, BinaryImage bimg){
+            List<Point> path = new List<Point>();
+            path.Add(new Point(row, col));
 
             if (bimg.TotalNeighbours(row, col) != 2){    // This will be the last point added do the path
                 return path;

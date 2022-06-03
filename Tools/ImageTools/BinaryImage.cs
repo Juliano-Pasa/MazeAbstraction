@@ -42,6 +42,7 @@ namespace MazeAbstraction.Tools.ImageTools
         }
 
         public int TotalNeighbours(int row, int col){
+            
             int height = bimg.Count();
             int width = bimg[0].Count();
             int total = 0;
