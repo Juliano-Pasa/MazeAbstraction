@@ -7,5 +7,7 @@ namespace MazeAbstraction.Tools.GraphTools
         public bool HasNode(INode node);
         public INode GetNode(int nodeId);
         public void AddLinkBetween(INode startNode, INode endNode, ILink link);
+
+        public int GetSize();
     }
 }

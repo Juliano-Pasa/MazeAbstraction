@@ -49,5 +49,9 @@ namespace MazeAbstraction.Tools.GraphTools
 
             AddLinkBetween(startNode, endNode, link);
         }
+
+        public int GetSize(){
+            return graph.Count;
+        }
     }
 }
