@@ -8,15 +8,15 @@ namespace MazeAbstraction.Tools.ImageTools
         public int height {get; private set;}
         private List<List<bool>> bimg;
 
-        public BinaryImage(List<List<bool>> bimg, int width, int height){
+        public BinaryImage(List<List<bool>> bimg){
             this.bimg = bimg;
-            this.width = width;
-            this.height = height;
+            this.width = bimg.Count;
+            this.height = bimg[0].Count;
         }
 
-        public BinaryImage(Bitmap bmp, int width, int height){
-            this.width = width;
-            this.height = height;
+        public BinaryImage(Bitmap bmp){
+            this.width = bmp.Width;
+            this.height = bmp.Height;
             this.bimg = ImageToBinaryImage(bmp);
         }
 

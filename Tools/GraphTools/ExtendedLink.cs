@@ -8,6 +8,7 @@ namespace MazeAbstraction.Tools.GraphTools
         private int id;
 
         public ExtendedLink(List<INode> extremeNodes, List<Point> intermediatePath, int id){
+            this.extremesNodes = extremeNodes;
             this.intermediatePath = intermediatePath;
             length = intermediatePath.Count();
             this.id = id;
